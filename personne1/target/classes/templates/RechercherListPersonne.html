@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<c:url value="/css/main.css" var="jstlCss" />
+<link href="${jstlCss}" rel="stylesheet" />
+<script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<head>
+	<meta charset="utf-8">
+	<title>Liste des Personnes</title>
+</head>
+
+<body>
+	<div layout:fragment="Mycontent">
+		<div class="container mt-5">
+			<div class="card">
+				<div class="card-header">
+
+					<h3>Liste des Personnes Rechercher</h3>
+					<hr />
+					<form th:action="@{searchPersonne}" method="post">
+						<div class="d-flex justify-content-between w-50">
+							<input type="text" name="machinenom" placeholder="Rechercher par machine..."
+								class="form-control " />
+							<button type="submit" class="btn btn-secondary mx-3">Recherche</button>
+						</div>
+					</form>
+
+					<div class="card-body">
+						<table class="table table-striped">
+							<tr>
+								<th>ID</th>
+								<th>Nom</th>
+								<th>Salaire </th>
+								<th>Télephone</th>
+								<th>Machine</th>
+								<th>Actions</th>
+							</tr>
+							<tr th:each="p:${personnes}">
+								<td th:text="${p.idPersonne}"></td>
+								<td th:text="${p.nomPersonne}"></td>
+								<td th:text="${p.salairePersonne}"></td>
+								<td th:text="${p.telPersonne}"></td>
+								<td th:text="${p.machine.nomMachine}"></td>
+								<td><a class="btn btn-danger" onclick="return confirm('Etes-vous sûr ?')"
+										th:href="@{supprimerPersonne(id=${p.idPersonne})}">Supprimer</a>
+									<a class="btn btn-success"
+										th:href="@{modifierPersonne(id=${p.idPersonne})}">Editer</a>
+								</td>
+							</tr>
+						</table>
+
+					</div>
+				</div>
+			</div>
+		</div>
+</body>
+
+</html>
